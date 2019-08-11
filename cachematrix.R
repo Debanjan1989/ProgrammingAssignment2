@@ -3,12 +3,18 @@
 
 makeCacheMatrix<-function(mat=matrix()){
   inv<-NULL
+ 
+ ##defining the set function 
   set<-function(y){
     mat<<-y
     inv<<-NULL
   }
+  
+  ##function the extract the set value
   get<-function() mat
+##function setting the value of inverse of defined matrix
   setinv<-function(mat_inv)inv<<-mat_inv
+##Function to return the inverted matrix  
   getinv<-function() inv
   list(set = set, get = get,
        setinv = setinv,
@@ -20,13 +26,18 @@ makeCacheMatrix<-function(mat=matrix()){
 ##should retrieve the inverse from the cache
 
 cacheSolve<-function(x,...){
+##extracting the inverted matrix   
  inv<- x$getinv()
+  
+ ##if value is present we will return the value and exit the function 
  if(!is.null(inv)){
    message("getting cached inverted matrix!")
    return(inv)
  }
+ ##else extract the data and invert it 
  data<-x$get()  
  inv<-solve(data)
+##setting the value of inverted data  
  x$setinv(inv)
  inv
 }
